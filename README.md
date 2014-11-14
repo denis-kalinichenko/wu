@@ -11,7 +11,7 @@ The new **Virtual University** for **[UITM]** based on [Node.js], [Express], [So
 Fast, secure and easy way to enjoy all the main features of the Virtual University [UITM].
 
 ## Version ##
-[0.0.1](HISTORY.md)
+[0.0.2](HISTORY.md)
 
 ### Online
 [http://wu.rzeszow.pl] * *it does not work yet*
