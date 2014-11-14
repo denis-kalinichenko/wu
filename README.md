@@ -1,6 +1,6 @@
 # Mobile WU
 
-New **Virtual University** for **[UITM]** based on [Node.js], [Express], [Socket.IO], [Twitter Bootstrap].
+The new **Virtual University** for **[UITM]** based on [Node.js], [Express], [Socket.IO], [Twitter Bootstrap].
 
  * Schedule
  * Grades
