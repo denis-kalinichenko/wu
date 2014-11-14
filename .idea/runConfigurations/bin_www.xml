@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="bin\www" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="bin/www" node-parameters="C:\Users\Vitalii\AppData\Roaming\npm\node_modules\supervisor\lib\cli-wrapper.js –no-restart-on error" working-dir="$PROJECT_DIR$">
+  <configuration default="false" name="bin\www" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="bin/www" node-parameters="C:\Users\kalin_000\AppData\Roaming\npm\node_modules\supervisor\lib\cli-wrapper.js –no-restart-on error" working-dir="$PROJECT_DIR$">
     <envs>
       <env name="DEBUG" value="mobile_wu" />
     </envs>

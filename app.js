@@ -7,6 +7,10 @@ var bodyParser = require('body-parser');
 var cheerio = require('cheerio');
 var http = require('http');
 var request = require('request');
+var fs = require("fs");
+
+// new modules
+var stats = require("stats");
 
 var app = express();
 
@@ -22,8 +26,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//request.post({url:'http://service.com/upload', form: {key:'value'}}, function(err,httpResponse,body){ /* ... */ })
 
+// global urls array
 var wu = {
     login: "https://wu.wsiz.rzeszow.pl/wunet/Logowanie2.aspx",
     podzgodzin: "https://wu.wsiz.rzeszow.pl/wunet/PodzGodzin.aspx",
@@ -35,12 +39,13 @@ var wu = {
 app.route('/')
 .get(function(req, res){
         res.render("login");
+        stats.init(fs, req.ip);
 })
 .post(function(req, res) {
     var user = req.body;
     var viewstate_val, login_name, login_value = "w"+user.login, password_name, password_value = user.password, submit_name, submit_value;
         // parse login form
-        request('https://wu.wsiz.rzeszow.pl/wunet/Logowanie2.aspx', function (error, response, body) {
+        request(wu.login, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 var $ = cheerio.load(body);
                 viewstate_val = $('#__VIEWSTATE').val();
