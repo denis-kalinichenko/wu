@@ -2,11 +2,11 @@
 
 New **Virtual University** for **[UITM]** based on [Node.js], [Express], [Socket.IO], [Twitter Bootstrap].
 
->  * Schedule
->  * Grades
->  * Notes and decisions
->  * Amount paid
->  * Magic
+ * Schedule
+ * Grades
+ * Notes and decisions
+ * Amount paid
+ * Magic
 
 Fast, secure and easy way to enjoy all the main features of the Virtual University [UITM].
 
