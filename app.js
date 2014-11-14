@@ -8,6 +8,7 @@ var cheerio = require('cheerio');
 var http = require('http');
 var request = require('request');
 var fs = require("fs");
+var mysql = require("mysql");
 
 // new modules
 var stats = require("stats");
