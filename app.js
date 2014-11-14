@@ -80,7 +80,7 @@ app.route('/')
 });
 
 app.get("/podzialgodzin", function(req, res) {
-    return request({url:'https://wu.wsiz.rzeszow.pl/wunet/PodzGodzin.aspx', jar:true}, function(err, httpResponse, body) {
+    return request({url: wu.podzgodzin, jar:true}, function(err, httpResponse, body) {
         var path = httpResponse.request.uri.pathname;
         if(path == "/wunet/Logowanie2.aspx") {
             res.redirect("/");
