@@ -1,0 +1,13 @@
+extends layout
+block title
+    title WU / DEBUG MODE
+
+block content
+    .container
+        h1 wu [debug]
+        //pre status: #{status}
+        pre= url
+        pre= cookie
+        p!= info
+        pre= response
+        //pre= data

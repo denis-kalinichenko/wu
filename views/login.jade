@@ -1,0 +1,24 @@
+extends layout
+
+block title
+    title WU / Login
+
+block scripts
+    script(src='/js/login.js')
+
+block content
+    .container
+        h1 wu
+        p Welcome to wu
+        //each val in forms
+          pre= val
+        b= error
+        form(action='' method='post')
+            .input-group.input-group-lg
+                span.input-group-addon w
+                input(type='text' placeholder='*****' name='login').form-control
+            br
+            .form-group
+                input(type='password' placeholder='password' name='password').form-control
+                br
+                input(type='submit' value='Login').btn.btn-primary.btn-lg
