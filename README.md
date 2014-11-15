@@ -31,6 +31,7 @@ WU uses a number of open source projects to work properly:
 * [morgan] - http request logger middleware for node.js
 * [request] - Simplified HTTP request client.
 * [serve-favicon] - favicon serving middleware
+* [node-mysql] - A pure node.js JavaScript Client implementing the MySql protocol.
 * [jQuery] - duh
 
 
@@ -60,5 +61,6 @@ License
 [morgan]:https://github.com/expressjs/morgan
 [request]:https://github.com/request/request
 [serve-favicon]:https://github.com/expressjs/serve-favicon
+[node-mysql]:https://github.com/felixge/node-mysql
 [UITM]:https://wsiz.rzeszow.pl/
 [http://wu.rzeszow.pl]:http://wu.rzeszow.pl/
