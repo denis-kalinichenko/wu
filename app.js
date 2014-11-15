@@ -9,6 +9,7 @@ var http = require('http');
 var request = require('request');
 var fs = require("fs");
 var mysql = require("mysql");
+var io = require('socket.io');
 
 // new modules
 var stats = require("stats");
