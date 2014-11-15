@@ -37,7 +37,7 @@ WU uses a number of open source projects to work properly:
 
 ### Todo's
 
- - Add Support Socket.IO
+ - Add Socket.IO Support
  - Multiple Sessions
 
 
