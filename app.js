@@ -58,8 +58,6 @@ var page = {
     }
 };
 
-
-
 app.route('/')
 .get(function(req, res){
         res.render("login");
