@@ -8,11 +8,12 @@ block scripts
 
 block content
     .container
-        h1 wu
-        p Welcome to wu
-        //each val in forms
-          pre= val
-        b= error
+        h1 WU
+        p Fast, secure, and easy way to enjoy all the main features of the Virtual University UITM.
+        if error
+            div(role="alert").alert.alert-danger
+                strong= error
+                p Check your id and password
         form(action='' method='post')
             .input-group.input-group-lg
                 span.input-group-addon w
