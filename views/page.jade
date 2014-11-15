@@ -1,0 +1,15 @@
+extends layout
+block title
+    title WU / #{title}
+block content
+    .container
+        h1 WU / #{title}
+        ul.nav.nav-tabs
+            each val in menu
+                if title == val.title
+                    li(class="active")
+                        a(href= val.url)= val.title
+                else
+                    li
+                        a(href= val.url)= val.title
+        p!= data
