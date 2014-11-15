@@ -37,6 +37,28 @@ var wu = {
     wplaty: "https://wu.wsiz.rzeszow.pl/wunet/Wplaty2.aspx"
 };
 
+// global pages array
+var page = {
+    podzialgodzin: {
+        title: "Podział godzin",
+        url: "/podzialgodzin"
+    },
+    oceny: {
+        title: "Oceny",
+        url: "/oceny"
+    },
+    uwagi: {
+        title: "Uwagi i decyzje",
+        url: "/uwagi"
+    },
+    wplaty: {
+        title: "Wpłaty",
+        url: "/wplaty"
+    }
+};
+
+
+
 app.route('/')
 .get(function(req, res){
         res.render("login");
@@ -85,20 +107,21 @@ app.route('/')
         });
 });
 
-app.get("/podzialgodzin", function(req, res) {
+app.get(page.podzialgodzin.url, function(req, res) {
     return request({url: wu.podzgodzin, jar:true}, function(err, httpResponse, body) {
         var path = httpResponse.request.uri.pathname;
         if(path == "/wunet/Logowanie2.aspx") {
             res.redirect("/");
         } else {
             var $ = cheerio.load(body);
-            $("#ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_dgDane").find(".opisPrzedmDyd").remove();
+            $("#ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_dgDane").addClass("table table-hover table-responsive").find(".opisPrzedmDyd").remove();
             var data = $("#ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_dgDane");
-            return res.render("podzialgodzin", {
+            return res.render("page", {
+                title: page.podzialgodzin.title,
+                menu: page,
                 data: data
             });
         }
-
     });
 });
 
