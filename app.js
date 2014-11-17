@@ -84,16 +84,14 @@ app.route('/')
                 formData[submit_name] = submit_value;
 
 
-                console.log(formData);
-
                 request.post({url:'https://wu.wsiz.rzeszow.pl/wunet/Logowanie2.aspx', jar: true, form: formData}, function optionalCallback(err, httpResponse, body) {
                     if (err) {
-                        return console.error('upload failed:', err);
+                        return console.error('login failed:', err);
                     } else {
-                        console.log();
                         var status = httpResponse.statusCode;
                         if(status==302) {
-                            //console.log("redirect");
+                            var cookies = httpResponse.headers['set-cookie'];
+                            res.cookie(cookies);
                             res.redirect("/podzialgodzin");
                         } else {
                             return res.render("login", {error: "Auth error"});
@@ -108,6 +106,7 @@ app.route('/')
 
 app.get(page.podzialgodzin.url, function(req, res) {
     return request({url: wu.podzgodzin, jar:true}, function(err, httpResponse, body) {
+        //console.log(httpResponse.headers['set-cookie']);
         var path = httpResponse.request.uri.pathname;
         if(path == "/wunet/Logowanie2.aspx") {
             res.redirect("/");
@@ -123,5 +122,7 @@ app.get(page.podzialgodzin.url, function(req, res) {
         }
     });
 });
+
+
 
 module.exports = app;
