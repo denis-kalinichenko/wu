@@ -5,11 +5,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cheerio = require('cheerio');
-var http = require('http');
+//var http = require('http');
 var request = require('request');
 var fs = require("fs");
 var mysql = require("mysql");
 var io = require('socket.io');
+var tough = require('tough-cookie');
 
 // new modules
 var stats = require("stats");
@@ -83,15 +84,33 @@ app.route('/')
                 formData[password_name] = password_value;
                 formData[submit_name] = submit_value;
 
-
-                request.post({url:'https://wu.wsiz.rzeszow.pl/wunet/Logowanie2.aspx', jar: true, form: formData}, function optionalCallback(err, httpResponse, body) {
+                var j = request.jar();
+                request.post({url:'https://wu.wsiz.rzeszow.pl/wunet/Logowanie2.aspx', form: formData, jar: j}, function optionalCallback(err, httpResponse, body) {
+                    console.log(j);
                     if (err) {
                         return console.error('login failed:', err);
                     } else {
                         var status = httpResponse.statusCode;
                         if(status==302) {
-                            var cookies = httpResponse.headers['set-cookie'];
-                            res.cookie(cookies);
+                            var path = "/wu/userdata/"+login_value+".txt";
+                            fs.exists(path, function(exists) {
+                                if (!exists) {
+                                    fs.openSync(path, 'w');
+                                }
+                            });
+                            //var cookies  = JSON.stringify(j._jar.store.idx);
+                            var cookies = j.getCookieString("https://wu.wsiz.rzeszow.pl/wunet/Logowanie2.aspx");
+
+                            fs.writeFile(path, cookies, function(err) {
+                                if(err) {
+                                    console.log(err);
+                                }
+                            });
+
+                            /* set cookie */
+                            res.cookie('user', login_value);
+
+                            /* should be ok, redirect */
                             res.redirect("/podzialgodzin");
                         } else {
                             return res.render("login", {error: "Auth error"});
@@ -105,22 +124,39 @@ app.route('/')
 });
 
 app.get(page.podzialgodzin.url, function(req, res) {
-    return request({url: wu.podzgodzin, jar:true}, function(err, httpResponse, body) {
-        //console.log(httpResponse.headers['set-cookie']);
-        var path = httpResponse.request.uri.pathname;
-        if(path == "/wunet/Logowanie2.aspx") {
-            res.redirect("/");
-        } else {
-            var $ = cheerio.load(body);
-            $("#ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_dgDane").addClass("table table-hover table-responsive").find(".opisPrzedmDyd").remove();
-            var data = $("#ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_dgDane");
-            return res.render("page", {
-                title: page.podzialgodzin.title,
-                menu: page,
-                data: data
-            });
+    var path = "/wu/userdata/"+req.cookies.user+".txt";
+    //fs.exists(path, function(exists) {
+    //    if (!exists) {
+    //        return res.redirect("/");
+    //    }
+    //});
+    fs.readFile(path, 'utf8', function (err, data) {
+        if (err) {
+            console.log('Error: ' + err);
+            return;
         }
+        var j = request.jar();
+        var cookie = request.cookie(data);
+        j.setCookie(cookie, "https://wu.wsiz.rzeszow.pl/");
+        request({url: wu.podzgodzin, jar: j}, function(err, httpResponse, body) {
+            console.log(j);
+            var path = httpResponse.request.uri.pathname;
+            if(path == "/wunet/Logowanie2.aspx") {
+                res.redirect("/#problem");
+            } else {
+                var $ = cheerio.load(body);
+                $("#ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_dgDane").addClass("table table-hover table-responsive").find(".opisPrzedmDyd").remove();
+                var data = $("#ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_dgDane");
+                return res.render("page", {
+                    title: page.podzialgodzin.title,
+                    menu: page,
+                    data: data
+                });
+            }
+        });
     });
+
+
 });
 
 
