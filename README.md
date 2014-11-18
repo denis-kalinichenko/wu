@@ -39,6 +39,7 @@ WU uses a number of open source projects to work properly:
 
  - Add Socket.IO Support
  - Multiple Sessions
+ - Safe Cookie Store
 
 
 License
